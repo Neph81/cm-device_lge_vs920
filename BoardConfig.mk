@@ -14,3 +14,6 @@ TARGET_PREBUILT_KERNEL := device/lge/vs920/kernel
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/lge/vs920/bluetooth
 
 TARGET_RECOVERY_FSTAB = device/lge/vs920/fstab.iprj
+
+# Device Assert.. ics, cwm, gb
+TARGET_OTA_ASSERT_DEVICE := i_vzw,I_VZW,vs920,VS920
