@@ -17,3 +17,6 @@ TARGET_RECOVERY_FSTAB = device/lge/vs920/fstab.iprj
 
 # Device Assert.. ics, cwm, gb
 TARGET_OTA_ASSERT_DEVICE := i_vzw,I_VZW,vs920,VS920
+
+TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
+
