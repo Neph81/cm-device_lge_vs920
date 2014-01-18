@@ -206,12 +206,6 @@ on property:ro.baseband=svlte2a
    setprop ro.config.ehrpd true
    setprop ro.ril.svlte1x true
 
-service bridgemgrd /system/bin/bridgemgrd
-    class late_start
-    user radio
-    group radio
-    disabled
-
 #+++ BRCM
 # dhcp service for pan-nap/pan-u
 service dhcpcd_brcm-pan /system/bin/dhcpcd -ABKL
@@ -228,17 +222,6 @@ service iprenew_brcm-pan /system/bin/dhcpcd -n
 service dhcpcd_bnep0 /system/bin/dhcpcd -BKLG
     disabled
     oneshot
-
-service gpsone_daemon /system/bin/gpsone_daemon
-    class late_start
-    user system
-    group system qcom_oncrpc inet
-    disabled
-
-service atfwd /system/bin/ATFWD-daemon
-    class late_start
-    user system
-    group system radio
 
 #service hostapd /system/bin/hostapd -dddd /data/hostapd/hostapd.conf
 service hostapd /system/bin/hostapd -e/data/misc/wifi/entropy.bin /data/misc/wifi/hostapd.conf
@@ -270,18 +253,6 @@ service sdcard /system/bin/sdcard /data/media 1023 1023
 on property:persist.fuse_sdcard=true
     start sdcard
 
-service atd /system/bin/atd
-    class late_start
-    user system
-    group system inet
-
-service qem /system/bin/qem
-    class late_start
-    user root
-    group root
-    disabled
-    oneshot
-
 on property:sys.boot_completed=1
     start qem
 
@@ -291,30 +262,9 @@ on property:sys.lgsetupwizard.status=1
 on property:sys.lgsetupwizard.status=2
     start qem
 
-service vpncstarter /system/bin/vpncstarter
-    class main
-    user system
-    group system net_admin net_raw
-
-# 04.12.2011 brian1.cheone@lge.com Playready drm 
-# adding for playready DRM to provision and save the keys
-service prapp /system/bin/prapp
-   class main
-   user root
-   group root
-   disabled
-   oneshot
-
 on property:sys.boot_completed=1
     start prapp
     
-########################################
-# CAPP_DRM
-########################################
-on post-fs-data
-    # create directory for lgdrm
-    mkdir /data/lgdrm 0770 lgdrm lgdrm_acc
-
 ########################################
 # CAPP_FONTS
 ########################################
@@ -333,20 +283,3 @@ on property:ro.reserve.blockcount=*
     exec /system/bin/tune2fs -r $ro.reserve.blockcount \
               -u system -g system $ro.reserve.userdata
 
-########################################
-# CAPP_DRM
-########################################
-service lgdrm /system/bin/lgdrmserver
-    class main
-    user lgdrm
-    group lgdrm_acc sdcard_rw media_rw system radio
-
-# restart when servicemanager is restarted
-on property:init.svc.servicemanager=restarting
-     restart lgdrm
-
-service qseecomd /system/bin/qseecomd
-   class late_start 
-   user system
-   group system
-   disabled
