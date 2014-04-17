@@ -9,7 +9,7 @@ on boot
     chmod 2770 /dev/socket/qmux_radio
     mkdir /dev/socket/qmux_audio 0770 media audio
     chmod 2770 /dev/socket/qmux_audio
-    mkdir /dev/socket/qmux_bluetooth 0770 bluetooth bluetooth
+    mkdir /dev/socket/qmux_bluetooth 0770 bluetooth net_bt_stack
     chmod 2770 /dev/socket/qmux_bluetooth
 
     #port-bridge
